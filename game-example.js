@@ -46,27 +46,28 @@ var calcSpeed = function(delta, pixelsPerSec) {
     return ((pixelsPerSec * delta) / 1000);
 };
 
-var game = {
-    x: 0, y: 0,
-    update: function(delta) {
+var x = 0, y = 0;
+
+var loop = new Looping('game')
+.onupdate(
+    function(delta) {
         if (lastKeyPressed == A) {
-            this.x -= calcSpeed(delta, 100);
+            x -= calcSpeed(delta, 100);
         } else if (lastKeyPressed == D) {
-            this.x += calcSpeed(delta, 100);
+            x += calcSpeed(delta, 100);
         } else if (lastKeyPressed == W) {
-            this.y -= calcSpeed(delta, 100);
+            y -= calcSpeed(delta, 100);
         } else if (lastKeyPressed == S) {
-            this.y += calcSpeed(delta, 100);
+            y += calcSpeed(delta, 100);
         }
         lastKeyPressed = null;
-    },
-    render: function(ctx) {
+    })
+.onrender(
+    function(ctx) {
         ctx.clearRect(0, 0, 300, 300);
         ctx.drawImage(car, this.x, this.y);
-    }
-};
-
+    });
 
 function startGame() {
-    new Looping('game', game);
-};
+    loop.start();
+}
