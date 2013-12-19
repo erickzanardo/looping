@@ -26,10 +26,6 @@ var renderCar = function() {
 
 var car = renderCar();
 
-document.body.onkeypress = function(e) {
-    processInput(e.keyCode || e.which);
-}
-
 // KEYS
 var A = 97
 var D = 100
@@ -38,10 +34,6 @@ var W = 119
 
 
 var lastKeyPressed;
-var processInput = function(keyCode) {
-    lastKeyPressed = keyCode;
-};
-
 var calcSpeed = function(delta, pixelsPerSec) {
     return ((pixelsPerSec * delta) / 1000);
 };
@@ -49,6 +41,9 @@ var calcSpeed = function(delta, pixelsPerSec) {
 var x = 0, y = 0;
 
 var loop = new Looping('game')
+.keypress(function(keyCode) {
+    lastKeyPressed = keyCode;
+})
 .onupdate(
     function(delta) {
         if (lastKeyPressed == A) {
